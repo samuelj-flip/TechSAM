@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE SYSTEM — MONARCH INTERFACE</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap');
+      
+      body {
+        font-family: 'Rajdhani', sans-serif;
+        background: radial-gradient(circle at center, #0b1528 0%, #030712 100%);
+      }
+      
+      .system-font {
+        font-family: 'Orbitron', sans-serif;
+      }
+      
+      .neon-glow {
+        text-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+      }
+      
+      .border-neon {
+        border-color: rgba(6, 182, 212, 0.3);
+        box-shadow: 0 0 15px rgba(6, 182, 212, 0.1);
+      }
+    </style>
+  </head>
+
+  <body class="text-slate-200 min-h-screen p-6 select-none">
+    <div class="max-w-5xl mx-auto flex justify-between items-center border-b border-cyan-500/30 pb-4 mb-8">
+      <div class="flex items-center gap-4">
+        <span class="system-font font-black text-xl text-cyan-400 tracking-wider neon-glow">STATUS WINDOW</span>
+        <span class="px-3 py-0.5 bg-cyan-900/50 border border-cyan-500 text-cyan-300 text-xs rounded font-bold uppercase tracking-widest">Monarch Authorized</span>
+      </div>
+      <div class="text-right text-sm tracking-widest text-slate-400">
+        PLAYER: <span class="text-white font-bold uppercase">{{ system.user.username }}</span>
+      </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-slate-950/80 border border-cyan-500/20 rounded-lg p-6 flex flex-col justify-between border-neon">
+        <div>
+          <h2 class="system-font text-slate-400 text-sm tracking-widest uppercase mb-1">Current Evaluation</h2>
+          <div class="text-5xl font-black text-cyan-400 tracking-wide system-font neon-glow my-2">LVL {{ system.level }}</div>
+          <div class="text-xl font-bold text-white tracking-widest uppercase mt-2">{{ system.get_rank_display }}</div>
+        </div>
+        <div class="mt-8 pt-4 border-t border-slate-800">
+          <div class="text-xs text-slate-500 tracking-wider uppercase mb-1">Growth Engine Status</div>
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-sm font-semibold text-emerald-400">Analyzing Development Metrics...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-950/80 border border-cyan-500/20 rounded-lg p-6 md:col-span-2 border-neon">
+        <h2 class="system-font text-cyan-400 text-sm tracking-widest uppercase mb-4 neon-glow">Ability Points & Stats</h2>
+
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-bold tracking-wider text-slate-300">STR [Backend: Django, SQL, PostgreSQL]</span>
+              <span class="system-font text-cyan-400 font-bold">{{ system.strength }}</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+              <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.5)]" style="width: {{ system.strength }}%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-bold tracking-wider text-slate-300">AGI [Front-End: JavaScript, React, Tailwind]</span>
+              <span class="system-font text-cyan-400 font-bold">{{ system.agility }}</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+              <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.5)]" style="width: {{ system.agility }}%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-bold tracking-wider text-slate-300">INT [System Architecture & AI/ML Modeling]</span>
+              <span class="system-font text-cyan-400 font-bold">{{ system.intelligence }}</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+              <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.5)]" style="width: {{ system.intelligence }}%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="font-bold tracking-wider text-slate-300">SEN [Market Scouting & Revenue Arbitrage Optimization]</span>
+              <span class="system-font text-cyan-400 font-bold">{{ system.sense }}</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+              <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-2 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.5)]" style="width: {{ system.sense }}%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto mt-6 bg-slate-950/80 border border-cyan-500/20 rounded-lg p-6 border-neon">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="system-font text-cyan-400 text-sm tracking-widest uppercase neon-glow">Daily Quest: Cleansing the Weakness</h2>
+          <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Uncompleted tasks will penalty drop system parameters.</p>
+        </div>
+        <div class="text-right">
+          <span class="text-xs tracking-widest text-slate-500 block uppercase">Time Remaining</span>
+          <span class="system-font font-bold text-rose-500 text-sm animate-pulse">SYSTEM SYNCHRONIZED</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded border 
+                {% if system.quest_code_committed %}
+            
+                    border-emerald-500/30 bg-emerald-950/10
+
+          {% else %}
+            
+                    border-slate-800 bg-slate-900/40
+
+          {% endif %}">
+          <div class="flex items-center gap-3">
+            <div class="h-4 w-4 rounded-full border border-cyan-500 flex items-center justify-center">
+              {% if system.quest_code_committed %}
+                <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+              {% endif %}
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white">Code Commit</div>
+              <div class="text-xs text-slate-400 mt-0.5">Push active repository updates to GitHub production.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded border 
+                {% if system.quest_docs_read %}
+            
+                    border-emerald-500/30 bg-emerald-950/10
+
+          {% else %}
+            
+                    border-slate-800 bg-slate-900/40
+
+          {% endif %}">
+          <div class="flex items-center gap-3">
+            <div class="h-4 w-4 rounded-full border border-cyan-500 flex items-center justify-center">
+              {% if system.quest_docs_read %}
+                <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+              {% endif %}
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white">Mana Recharge</div>
+              <div class="text-xs text-slate-400 mt-0.5">Read technical documentation, release notes, or articles.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded border 
+                {% if system.quest_logic_solved %}
+            
+                    border-emerald-500/30 bg-emerald-950/10
+
+          {% else %}
+            
+                    border-slate-800 bg-slate-900/40
+
+          {% endif %}">
+          <div class="flex items-center gap-3">
+            <div class="h-4 w-4 rounded-full border border-cyan-500 flex items-center justify-center">
+              {% if system.quest_logic_solved %}
+                <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+              {% endif %}
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white">Strength Training</div>
+              <div class="text-xs text-slate-400 mt-0.5">Solve an algorithmic problem or write system automation.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

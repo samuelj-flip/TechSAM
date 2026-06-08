@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechSAM | Full-Stack & AI/ML Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+
+  <body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-teal-500 selection:text-slate-900">
+    <nav class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <a href="/" class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500 hover:opacity-80 transition">TechSAM</a>
+        </div>
+        <div class="flex items-center space-x-8 text-sm font-medium text-slate-400">
+          <a href="#services" class="hover:text-teal-400 transition">Services</a>
+          <a href="#contact" class="hover:text-teal-400 transition">Initialize Project</a>
+          <a href="/admin" class="hover:text-teal-400 transition" target="_blank">Console Dashboard</a>
+
+          {% if user.is_superuser %}
+            <a href="{% url 'system_dashboard' %}" class="text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 rounded hover:bg-cyan-500 hover:text-slate-900 transition flex items-center gap-1.5 font-bold tracking-wide uppercase text-xs"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span> The System</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <header class="relative overflow-hidden py-24 lg:py-32 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-400/10 text-teal-400 mb-4 border border-teal-400/20"><span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span> Available for Projects</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-3xl mx-auto leading-tight">Building Automated Systems That Generate <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Revenue</span></h1>
+        <p class="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">Hi, I'm Samuel James. I design and build high-end digital products, automated web scrapers, and intelligent data-driven models.</p>
+        <div class="mt-10 flex justify-center gap-4">
+          <a href="#services" class="bg-teal-500 hover:bg-teal-400 text-slate-900 font-semibold px-6 py-3 rounded-lg transition shadow-lg shadow-teal-500/20">View Services</a>
+          <a href="#contact" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3 rounded-lg transition">Start Project</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="services" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Production Capabilities</h2>
+        <p class="mt-4 text-slate-400">High-impact engineering deliverables built to solve real-world technical problems.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for service in services %}
+          <div class="bg-slate-800/40 border border-slate-800 p-8 rounded-2xl hover:border-teal-500/40 transition duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl mb-6 group-hover:bg-teal-500 group-hover:text-slate-900 transition duration-300">
+                {% if service.icon_type == 'code' %}
+                  <i class="fa-solid fa-code"></i>
+                {% elif service.icon_type == 'terminal' %}
+                  <i class="fa-solid fa-terminal"></i>
+                {% else %}
+                  <i class="fa-solid fa-microchip"></i>
+                {% endif %}
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2">{{ service.title }}</h3>
+              <p class="text-xs font-semibold text-teal-400 tracking-wide uppercase mb-4">{{ service.tagline }}</p>
+              <p class="text-sm text-slate-400 leading-relaxed">{{ service.description }}</p>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col-span-full border-2 border-dashed border-slate-800 rounded-2xl p-12 text-center">
+            <i class="fa-solid fa-folder-open text-slate-600 text-4xl mb-4"></i>
+            <h3 class="text-lg font-semibold text-slate-300">No services active yet</h3>
+            <p class="text-sm text-slate-500 mt-1">Head over to the admin console dashboard to populate your first system capability card!</p>
+            <a href="/admin" target="_blank" class="mt-4 inline-flex items-center gap-2 bg-slate-800 text-slate-200 text-xs px-4 py-2 rounded-lg font-medium hover:bg-slate-700 transition">Go to Admin <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section id="contact" class="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Initialize a Project</h2>
+        <p class="mt-4 text-slate-400">Submit your parameters to log a project request directly into the automated pipeline queue.</p>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="mb-8 p-4 bg-teal-500/10 border border-teal-500/30 text-teal-400 rounded-xl text-sm flex items-center gap-3">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" class="space-y-6 bg-slate-800/20 border border-slate-800 p-8 rounded-2xl">
+        {% csrf_token %}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Name</label>
+            <input type="text" name="name" required class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:border-teal-500 transition" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Email Address</label>
+            <input type="email" name="email" required class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:border-teal-500 transition" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Project Type</label>
+            <input type="text" name="project_type" placeholder="e.g., Full-Stack App, Scraper Bot" required class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500 transition" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Estimated Budget Range</label>
+            <input type="text" name="budget" placeholder="e.g., $2k - $5k, Flexible" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500 transition" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Project Brief / Core Requirements</label>
+          <textarea name="message" rows="5" required placeholder="Describe the automated features or engineering specifications required..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500 transition"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-400 hover:to-blue-400 text-slate-900 font-bold py-4 rounded-xl transition shadow-lg shadow-teal-500/10 tracking-wide uppercase text-xs">Transmit Parameters to Console</button>
+      </form>
+    </section>
+
+    <footer class="border-t border-slate-800 bg-slate-950/50 py-8 text-center text-xs text-slate-500">
+      <p>&copy; 2026 TechSAM. Engineered by Samuel James.</p>
+    </footer>
+  </body>
+</html>
