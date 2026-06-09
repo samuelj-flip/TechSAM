@@ -73,3 +73,57 @@ class HunterSystem(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - Level {self.level} [{self.get_rank_display()}]"
+
+class UserStatus(models.Model):
+    user_name = models.CharField(max_length=50, default="Samuel James")
+    current_level = models.IntegerField(default=1)
+    total_xp = models.IntegerField(default=0)
+    
+    # Core Status Matrix
+    strength = models.IntegerField(default=10)      # Physical fitness/health
+    intelligence = models.IntegerField(default=10)  # Coding/engineering mastery
+    agility = models.IntegerField(default=10)       # Execution/productivity speed
+    wisdom = models.IntegerField(default=10)        # Business acumen/finances
+    willpower = models.IntegerField(default=10)      # Discipline/habit consistency
+
+    class Meta:
+        verbose_name_plural = "User Status"
+
+    def __str__(self):
+        return f"{self.user_name} - Level {self.current_level}"
+
+    def add_xp(self, amount, stat_category):
+        self.total_xp += amount
+        
+        # Level up logic: Level 1 takes 100 XP, Level 2 takes 200 XP, etc.
+        while self.total_xp >= (self.current_level * 100):
+            self.total_xp -= (self.current_level * 100)
+            self.current_level += 1
+            
+        # Allocate a point to the specific stat that earned the XP
+        if stat_category == 'STR': self.strength += 1
+        elif stat_category == 'INT': self.intelligence += 1
+        elif stat_category == 'AGI': self.agility += 1
+        elif stat_category == 'WIS': self.wisdom += 1
+        elif stat_category == 'WIL': self.willpower += 1
+        
+        self.save()
+
+class DailyQuest(models.Model):
+    STAT_CHOICES = [
+        ('STR', 'Strength'),
+        ('INT', 'Intelligence'),
+        ('AGI', 'Agility'),
+        ('WIS', 'Wisdom'),
+        ('WIL', 'Willpower'),
+    ]
+    
+    task_name = models.CharField(max_length=200)
+    stat_category = models.CharField(max_length=3, choices=STAT_CHOICES)
+    xp_reward = models.IntegerField(default=20)
+    is_completed = models.BooleanField(default=False)
+    date_logged = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        status = "✅" if self.is_completed else "❌"
+        return f"{status} {self.task_name} (+{self.xp_reward} XP)"
