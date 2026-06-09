@@ -6,6 +6,7 @@ Secure Environment Variable Setup implemented by Samuel James.
 from pathlib import Path
 import environ
 import os
+import dj_database_url
 
 # 1. INITIALIZE ENVIRONMENT VARIABLES
 env = environ.Env(DEBUG=(bool, False))
@@ -13,16 +14,21 @@ env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Read local .env file if it exists (for local development)
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 
 # 2. APPLICATION CONFIGURATION PARAMETERS (Pulled from .env)
-SECRET_KEY = env("SECRET_KEY")
-DEBUG = env.bool("DEBUG")
+SECRET_KEY = env("SECRET_KEY", default="FallbackTemporaryLocalKeyForDevelopmentOnly")
+DEBUG = env("DEBUG", default=False)
 
 # ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['.onrender.com', 'localhost', '127.0.0.1'])
+ALLOWED_HOSTS = env.list(
+    "ALLOWED_HOSTS", default=[".onrender.com", "127.0.0.1", "localhost"]
+)
 
 
 # 3. APPLICATION DEFINITION
@@ -70,7 +76,11 @@ WSGI_APPLICATION = "tech_sam_project.wsgi.application"
 
 # 4. DATABASE CONFIGURATION (Securely parsing your DATABASE_URL string)
 DATABASES = {
-    "default": env.db(),
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=True if not env("DEBUG", default=False) else False,
+    )
 }
 
 
@@ -108,6 +118,13 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+
+# STORAGES = {
+#     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#     },
+# }
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
