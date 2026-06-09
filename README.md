@@ -46,7 +46,7 @@ The core status board reads system parameters across four primary dimensions:
 Clone the workspace and activate the dedicated system environment:
 ```bash
 # Clone the target repository
-git clone [https://github.com/your-username/TechSAM.git](https://github.com/your-username/TechSAM.git)
+git clone [https://github.com/samuelj-flip/TechSAM.git](https://github.com/samuelj-flip/TechSAM.git)
 cd TechSAM
 
 # Spin up and activate the virtual environment folder
