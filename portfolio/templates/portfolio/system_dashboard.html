@@ -118,11 +118,15 @@
         <div class="p-4 rounded border 
                 {% if system.quest_code_committed %}
             
+            
                     border-emerald-500/30 bg-emerald-950/10
+
 
           {% else %}
             
+            
                     border-slate-800 bg-slate-900/40
+
 
           {% endif %}">
           <div class="flex items-center gap-3">
@@ -141,11 +145,15 @@
         <div class="p-4 rounded border 
                 {% if system.quest_docs_read %}
             
+            
                     border-emerald-500/30 bg-emerald-950/10
+
 
           {% else %}
             
+            
                     border-slate-800 bg-slate-900/40
+
 
           {% endif %}">
           <div class="flex items-center gap-3">
@@ -164,11 +172,15 @@
         <div class="p-4 rounded border 
                 {% if system.quest_logic_solved %}
             
+            
                     border-emerald-500/30 bg-emerald-950/10
+
 
           {% else %}
             
+            
                     border-slate-800 bg-slate-900/40
+
 
           {% endif %}">
           <div class="flex items-center gap-3">
@@ -185,5 +197,15 @@
         </div>
       </div>
     </div>
+
+    {% if user.is_authenticated and user.is_superuser %}
+      <div class="max-w-5xl mx-auto mt-6 bg-slate-950/50 border border-cyan-500/10 rounded-lg p-4 flex flex-col sm:flex-row items-center justify-between gap-4 hover:border-cyan-500/30 transition-all duration-300">
+        <div>
+          <h3 class="system-font text-xs font-bold text-cyan-400 tracking-wider uppercase">Secondary Terminal Authorization Detected</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Secure gateway link unlocked. Redirecting to deep character status sheets.</p>
+        </div>
+        <a href="{% url 'hunter_status' %}" class="system-font text-xs font-bold text-slate-950 bg-cyan-400 hover:bg-cyan-300 px-4 py-2 rounded tracking-widest uppercase transition-colors shadow-[0_0_10px_rgba(6,182,212,0.4)]">Access Status Sheet →</a>
+      </div>
+    {% endif %}
   </body>
 </html>
