@@ -113,18 +113,10 @@ STATIC_URL = "/static/"
 
 # Local asset tracking directory
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "staticfiles"),
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-
-# STORAGES = {
-#     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
-#     },
-# }
+STATIC_ROOT = BASE_DIR / "static"
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},

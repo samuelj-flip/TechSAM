@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hunter Status Window</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" type="image/png" href="/{% static 'brand/favicon.png' %}" />
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 font-sans p-6 flex flex-col items-center justify-center">
+    
     <div class="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-2xl relative overflow-hidden">
       <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -17,17 +20,19 @@
         </div>
         <div class="text-right">
           <span class="inline-block px-3 py-1 rounded bg-slate-800 border border-slate-700 text-xs font-mono font-bold text-amber-400">{{ hunter.rank|default:'E-Rank' }}</span>
-          <div class="text-2xl font-black text-white mt-1">LVL {{ hunter.level }}</div>
+          <div class="text-2xl font-black text-white mt-1">LVL {{ hunter.level|default:1 }}</div>
         </div>
       </div>
 
       <div class="mb-8">
         <div class="flex justify-between text-xs font-mono text-slate-400 mb-2">
           <span>EXPERIENCE (XP)</span>
-          <span>{{ current_xp }} / {{ next_level_xp }} XP</span>
+          <span>{{ current_xp|default:0 }} / {{ next_level_xp|default:100 }} XP</span>
         </div>
         <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden p-[2px] border border-slate-700">
-          <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" style="width: {{ xp_percentage }}%"></div>
+          <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-700 shadow-[0_0_10px_rgba(59,130,246,0.5)]" 
+               style="width: {{ xp_percentage|default:0 }}%">
+          </div>
         </div>
       </div>
 
@@ -39,7 +44,7 @@
             <div class="font-bold text-sm tracking-wide text-slate-200">STRENGTH (STR)</div>
             <div class="text-xs text-slate-500">Physical fitness & health tracking</div>
           </div>
-          <span class="font-mono text-xl font-black text-white bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.strength }}</span>
+          <span class="font-mono text-xl font-black text-white bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.strength|default:10 }}</span>
         </div>
 
         <div class="bg-slate-950/50 border border-slate-800/60 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors">
@@ -47,7 +52,7 @@
             <div class="font-bold text-sm tracking-wide text-slate-200">INTELLIGENCE (INT)</div>
             <div class="text-xs text-slate-500">Technical mastery & engineering</div>
           </div>
-          <span class="font-mono text-xl font-black text-blue-400 bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.intelligence }}</span>
+          <span class="font-mono text-xl font-black text-blue-400 bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.intelligence|default:10 }}</span>
         </div>
 
         <div class="bg-slate-950/50 border border-slate-800/60 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors">
@@ -55,7 +60,7 @@
             <div class="font-bold text-sm tracking-wide text-slate-200">AGILITY (AGI)</div>
             <div class="text-xs text-slate-500">Execution speed & productivity</div>
           </div>
-          <span class="font-mono text-xl font-black text-white bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.agility }}</span>
+          <span class="font-mono text-xl font-black text-white bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.agility|default:10 }}</span>
         </div>
 
         <div class="bg-slate-950/50 border border-slate-800/60 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors">
@@ -63,13 +68,13 @@
             <div class="font-bold text-sm tracking-wide text-slate-200">SENSE (SEN)</div>
             <div class="text-xs text-slate-500">Awareness, business intuition & attention</div>
           </div>
-          <span class="font-mono text-xl font-black text-white bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.sense }}</span>
+          <span class="font-mono text-xl font-black text-white bg-slate-850 px-3 py-1 rounded border border-slate-800">{{ hunter.sense|default:10 }}</span>
         </div>
       </div>
 
       <div class="mt-6 text-left">
         <a href="{% url 'system_dashboard' %}" class="inline-flex items-center text-xs font-mono text-slate-500 hover:text-blue-400 transition-colors">
-          ← Return to System Dashboard
+          &larr; Return to System Dashboard
         </a>
       </div>
 
@@ -77,5 +82,6 @@
         <p class="text-xs font-mono text-slate-500 tracking-wider">[ System Status: Active • Complete Quests in Admin to Level Up ]</p>
       </div>
     </div>
+
   </body>
 </html>
